@@ -1,6 +1,7 @@
 if (browserSupportsAllFeatures()) {
   runMain();
 } else {
+  console.log('downloading polyfilla');
   loadScript(window.__ASSET_MANIFEST__['polyfills.js'], runMain);
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "react-ssr-boilerplate",
-  "version": "5.1.0",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -8,13 +8,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
     "start:prod": "node scripts/startProd.js",
-    "lint": "eslint src/**/*.js",
-    "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
-    "docker:build": "docker build --rm -t cullenjett/react-ssr-boilerplate .",
-    "docker:start": "docker run --rm -it -p 3000:3000 cullenjett/react-ssr-boilerplate",
-    "docker": "npm run docker:build && npm run docker:start"
+    "lint": "eslint src/**/*.js"
   },
   "husky": {
     "hooks": {
@@ -39,13 +34,13 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "@testing-library/react": "^9.1.4",
+    "@loadable/component": "^5.13.1",
+    "@loadable/server": "^5.13.1",
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-dynamic-import-node": "^2.3.0",
-    "body-parser": "^1.19.0",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "chalk": "^2.4.2",
     "chokidar": "^3.0.2",
@@ -68,7 +63,6 @@
     "husky": "^3.0.5",
     "import-glob-loader": "^1.1.0",
     "isomorphic-unfetch": "^3.0.0",
-    "jest": "^24.9.0",
     "lint-staged": "^9.2.5",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.8.0",
@@ -77,17 +71,14 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
-    "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dev-utils": "^9.0.3",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
-    "react-loadable": "^5.5.0",
     "react-router-dom": "^5.0.1",
     "react-ssr-prepass": "^1.0.6",
     "react-test-renderer": "^16.9.0",
-    "response-time": "^2.3.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",

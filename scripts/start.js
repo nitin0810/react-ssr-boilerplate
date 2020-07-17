@@ -1,6 +1,15 @@
 /* eslint-disable no-console */
+// Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'development';
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
+
+
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
 
 require('@babel/register')({
   plugins: [
@@ -16,11 +25,11 @@ require('@babel/register')({
   ]
 });
 
+const path = require('path');
+const express = require('express');
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
-const express = require('express');
 const openBrowser = require('react-dev-utils/openBrowser');
-const path = require('path');
 const {
   choosePort,
   prepareUrls
@@ -29,11 +38,9 @@ const {
 const { applyDevMiddleware } = require('./utils/devMiddleware');
 const { purgeCacheOnChange } = require('./utils/purgeCacheOnChange');
 
-process.on('unhandledRejection', err => {
-  throw err;
-});
 
-const DEFAULT_PORT = process.env.PORT || 3000;
+
+const DEFAULT_PORT = process.env.PORT || 3002;
 const HOST = process.env.HOST || '0.0.0.0';
 const isInteractive = process.stdout.isTTY;
 const server = express();
@@ -43,12 +50,16 @@ const server = express();
 applyDevMiddleware(server);
 
 server.use((req, res) => {
+  console.log('requiring server app');
   // We use "require" inside this function
   // so that when purgeCacheOnChange() runs we pull in the most recent code.
   // https://codeburst.io/dont-use-nodemon-there-are-better-ways-fc016b50b45e
   const { app } = require('../server/app');
   app(req, res);
 });
+
+
+
 
 choosePort(HOST, DEFAULT_PORT).then(port => {
   if (!port) {
@@ -69,7 +80,6 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
     console.log(chalk.white('\n\tStarting dev server...'));
 
     openBrowser(urls.localUrlForBrowser);
-
     purgeCacheOnChange(path.resolve(__dirname, '../'));
 
     console.log(

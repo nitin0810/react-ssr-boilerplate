@@ -1,49 +1,36 @@
 import React, { useState } from 'react';
 
 import { api } from '../api';
-import { useServerData } from '../state/serverDataContext';
+// import { useServerData } from '../state/serverDataContext';
+import loadable from '@loadable/component'
 
-const Home = () => {
-  const serverTodos = useServerData(data => {
-    return data.todos || [];
-  });
-  const [text, setText] = useState('');
-  const [todos, setTodos] = useState(serverTodos);
+
+// import(/* webpackPrefetch: true */ './LazyA.jsx')
+// .then(({ default: LazyA }) => {
+//   A = LazyA;
+// })
+
+const Home = (props) => {
+  // const serverTodos = useServerData(data => {
+  //   return data.todos || [];
+  // });
+  // const [text, setText] = useState('');
+  // const [todos, setTodos] = useState(serverTodos);
+  console.log('Home props : ', props.staticContext)
+  const ssrData = props.staticContext ? props.staticContext.homePage : window.__SERVER_DATA__.homePage;
+
+
 
   return (
     <div>
       <h1>Home page</h1>
 
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-
-          const newTodo = {
-            text
-          };
-
-          api.todos.create(newTodo).then(res => {
-            setTodos([...todos, res]);
-            setText('');
-          });
-        }}
-      >
-        <label htmlFor="todo">Add a todo</label>
-        <br />
-        <input
-          id="todo"
-          type="text"
-          value={text}
-          autoComplete="off"
-          onChange={e => setText(e.target.value)}
-        />
-      </form>
-
       <ul>
-        {todos.map(todo => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
+        <li >a : {ssrData.a}</li>
+        <li >b : {ssrData.b}</li>
       </ul>
+
+
     </div>
   );
 };
