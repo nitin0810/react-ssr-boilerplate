@@ -17,7 +17,7 @@ app.use(helmet());
 // Serve generated assets
 app.use(
   PUBLIC_URL,
-  express.static(path.resolve(__dirname, '../build'), {
+  express.static(path.resolve('./build'), {
     maxage: Infinity
   })
 );
@@ -25,7 +25,7 @@ app.use(
 // Serve static assets in /public
 app.use(
   PUBLIC_URL,
-  express.static(path.resolve(__dirname, '../public'), {
+  express.static(path.resolve('./public'), {
     maxage: '30 days'
   })
 );

@@ -6,7 +6,7 @@ import { loadableReady } from '@loadable/component'
 import App from './App.jsx';
 
 
-import { ServerDataProvider } from './state/serverDataContext';
+import { ServerDataProvider } from '../shared/state/serverDataContext';
 
 import './styles/index.scss';
 

@@ -54,7 +54,7 @@ server.use((req, res) => {
   // We use "require" inside this function
   // so that when purgeCacheOnChange() runs we pull in the most recent code.
   // https://codeburst.io/dont-use-nodemon-there-are-better-ways-fc016b50b45e
-  const { app } = require('../server/app');
+  const { app } = require('../src/server/app');
   app(req, res);
 });
 

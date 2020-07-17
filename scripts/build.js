@@ -53,6 +53,8 @@ function build(previousFileSizes) {
         console.log(chalk.white('✓ Client webpack build complete'));
       }
 
+      console.log('SEVER CONIG',serverConfig);
+
       serverCompiler.run(err => {
         if (err) {
           return reject(err);

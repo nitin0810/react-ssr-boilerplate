@@ -39,12 +39,12 @@ module.exports = function (envType) {
       // which connects with webpack-dev-server and looks for changes in files and reloads the browser
       'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
       // app's code entrypoint
-      resolvePath('../src/index.js')
+      resolvePath('../src/client/index.js')
     ]
     : {
       // create two entry bundles, one for polyfill and one for app's code
-      polyfills: resolvePath('../src/polyfills.js'),
-      main: resolvePath('../src/index.js')
+      polyfills: resolvePath('../src/client/polyfills.js'),
+      main: resolvePath('../src/client/index.js')
     };
 
   config.output = IS_DEV

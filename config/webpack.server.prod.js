@@ -18,7 +18,7 @@ module.exports = {
   node: {
     __dirname: true
   },
-  entry: './server/app.js',
+  entry: resolvePath('../src/server/app.js'),
   output: {
     path: resolvePath('../build'),
     filename: 'server.js',
@@ -39,7 +39,7 @@ module.exports = {
                 camelCase: true,
                 extensions: ['.css', '.scss'],
                 generateScopedName: '[hash:base64]',
-                ignore: 'src/styles'
+                ignore: 'src/client/styles'
               }
             ],
             'dynamic-import-node'
@@ -48,7 +48,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        exclude: [resolvePath('../src/styles')],
+        exclude: [resolvePath('../src/client/styles')],
         use: [
           {
             loader: 'css-loader',

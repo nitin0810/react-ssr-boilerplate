@@ -4,13 +4,13 @@ import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import path from 'path';
 
-import { getAppEnv } from '../config/env';
+import { getAppEnv } from '../../config/env';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
 
-import App from '../src/App.jsx';
-import { fetchDataForRender } from './fetchDataForRender';
-import { ServerDataProvider } from '../src/state/serverDataContext';
+import App from '../client/App.jsx';
+// import { fetchDataForRender } from './fetchDataForRender';
+import { ServerDataProvider } from '../shared/state/serverDataContext';
 
 const env = getAppEnv();
 const { NODE_ENV } = env.raw;
