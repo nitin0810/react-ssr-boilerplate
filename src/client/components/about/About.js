@@ -24,7 +24,7 @@ class About extends Component {
         loading:false,
         data:{a:21,b:22}
       });
-    }, 2000);
+    }, 1000);
   }
 
   render() {

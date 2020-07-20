@@ -1,31 +1,16 @@
-const { main } = require('./main');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { loadableReady } from '@loadable/component'
+import App from './App.jsx';
 
-main();
-// if (browserSupportsAllFeatures()) {
-// } else {
-//   console.log('downloading polyfilla');
-//   loadScript(window.__ASSET_MANIFEST__['polyfills.js'], runMain);
-// }
+import './styles/index.scss';
 
-// function runMain() {
-//   const { main } = require('./main');
-//   main();
-// }
-
-// function browserSupportsAllFeatures() {
-//   return window.Promise && Object.assign;
-// }
-
-// function loadScript(src, done) {
-//   const script = document.createElement('script');
-
-//   script.src = src;
-//   script.onload = () => {
-//     done();
-//   };
-//   script.onerror = () => {
-//     done(new Error('Failed to load script ' + src));
-//   };
-
-//   document.head.appendChild(script);
-// }
+loadableReady(() => {
+    ReactDOM.hydrate(
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+});
