@@ -42,8 +42,7 @@ module.exports = function (envType) {
       resolvePath('../src/client/index.js')
     ]
     : {
-      // create two entry bundles, one for polyfill and one for app's code
-      polyfills: resolvePath('../src/client/polyfills.js'),
+
       main: resolvePath('../src/client/index.js')
     };
 
@@ -177,13 +176,14 @@ module.exports = function (envType) {
     IS_DEV && new ErrorOverlayPlugin(),
     IS_PROD &&
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[contenthash:8].css'
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
     }),
     IS_PROD &&
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
     }),
-    new LoadablePlugin({writeToDisk: true})
+    new LoadablePlugin({ writeToDisk: true })
   ].filter(Boolean);
 
   config.node = {

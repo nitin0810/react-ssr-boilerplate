@@ -7,7 +7,6 @@ import App from './App.jsx';
 import './styles/index.scss';
 
 export const main = () => {
-  // Loadable.preloadReady().then(() => {
     loadableReady(() => {
     ReactDOM.hydrate(
         <BrowserRouter>
@@ -16,5 +15,4 @@ export const main = () => {
       document.getElementById('root')
     );
   });
-  // });
 };

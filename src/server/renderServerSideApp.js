@@ -20,7 +20,7 @@ export const renderServerSideApp = (req, res) => {
   const context = { data: {}, head: [] };
   collectRequiredDataPromisesInContext(context, req);
   // console.warn(chalk.green('collected data : ', JSON.stringify(context.data)));
-  // at this point we have required promises in context.data
+  // At this point we have required promises in context.data
   const keys = Object.keys(context.data);
   const promises = keys.map(k => context.data[k]);
   fetchRequiredData(promises)
@@ -114,7 +114,7 @@ export const giveFullHtml = async ({ helmet, serverData, markup, extractor }) =>
     styleTags = extractor.getStyleTags()
     try {
       // for SSR, include the .css files content in the <style> tag within the html reponse 
-      // it is done so that first page appears styles even in very first frame, otherwise page will remain unstyles untill the css files are downloaded 
+      // it is done so that first page appears styled even in very first frame, otherwise page will remain unstyled untill the css files are downloaded 
       inlineStyleTags = await extractor.getInlineStyleTags();
     } catch (e) { }
   }

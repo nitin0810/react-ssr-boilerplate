@@ -1,29 +1,31 @@
-if (browserSupportsAllFeatures()) {
-  runMain();
-} else {
-  console.log('downloading polyfilla');
-  loadScript(window.__ASSET_MANIFEST__['polyfills.js'], runMain);
-}
+const { main } = require('./main');
 
-function runMain() {
-  const { main } = require('./main');
-  main();
-}
+main();
+// if (browserSupportsAllFeatures()) {
+// } else {
+//   console.log('downloading polyfilla');
+//   loadScript(window.__ASSET_MANIFEST__['polyfills.js'], runMain);
+// }
 
-function browserSupportsAllFeatures() {
-  return window.Promise && Object.assign;
-}
+// function runMain() {
+//   const { main } = require('./main');
+//   main();
+// }
 
-function loadScript(src, done) {
-  const script = document.createElement('script');
+// function browserSupportsAllFeatures() {
+//   return window.Promise && Object.assign;
+// }
 
-  script.src = src;
-  script.onload = () => {
-    done();
-  };
-  script.onerror = () => {
-    done(new Error('Failed to load script ' + src));
-  };
+// function loadScript(src, done) {
+//   const script = document.createElement('script');
 
-  document.head.appendChild(script);
-}
+//   script.src = src;
+//   script.onload = () => {
+//     done();
+//   };
+//   script.onerror = () => {
+//     done(new Error('Failed to load script ' + src));
+//   };
+
+//   document.head.appendChild(script);
+// }

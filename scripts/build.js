@@ -46,13 +46,15 @@ function build(previousFileSizes) {
   const serverCompiler = webpack(serverConfig);
 
   return new Promise((resolve, reject) => {
+    process.env.BUILD_TARGET = 'browser'; // this is used for polyfilling client side code during the production
     clientCompiler.run((err, stats) => {
       if (err) {
         return reject(err);
       } else {
+        copyPublicFolder();
         console.log(chalk.white('✓ Client webpack build complete'));
       }
-
+      process.env.BUILD_TARGET = 'server';
       serverCompiler.run(err => {
         if (err) {
           return reject(err);
@@ -73,6 +75,12 @@ function build(previousFileSizes) {
         });
       });
     });
+  });
+}
+
+function copyPublicFolder() {
+  fs.copySync(resolvePath('../public'), resolvePath('../build'), {
+    dereference: true
   });
 }
 

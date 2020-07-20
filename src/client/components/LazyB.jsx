@@ -47,7 +47,7 @@ export default class LazyB extends React.Component {
       setTimeout(() => {
         const data = { a: 11, b: 12 };
         resolve(data);
-      }, 2000);
+      }, 500);
     });
   }
 

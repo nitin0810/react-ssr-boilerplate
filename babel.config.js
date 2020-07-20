@@ -1,15 +1,18 @@
-module.exports = function(api) {
-  api.cache(true);
-
+module.exports = function (api) {
+  // invalidate the cache when building for client and server
+  // so that babel config is computed fresh in both cases
+  api.cache.invalidate(() => process.env.BUILD_TARGET)
+  const buildTarget = process.env.BUILD_TARGET;
   const presets = [
     [
       '@babel/preset-env',
+      buildTarget === 'browser' &&
       {
-        targets: {
-          browsers: ['>1%', 'ie 11', 'not op_mini all']
-        }
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
-    ],
+
+    ].filter(Boolean),
     '@babel/preset-react'
   ];
 

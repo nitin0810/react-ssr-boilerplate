@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 const Home = (props) => {
   const { staticContext } = props;
 
+
   let initialData = null;
   if (staticContext) {
     // SERVER SIDE HANDLING 
