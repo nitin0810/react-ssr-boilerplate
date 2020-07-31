@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { Helmet } from 'react-helmet';
 
+import SSRContext from '../../server/ssrContext';
+
 
 const Home = (props) => {
-  const { staticContext } = props;
+  const ssrContext = useContext(SSRContext);
+  console.log('ssrcontext inside Home',ssrContext)
 
 
   let initialData = null;
-  if (staticContext) {
+  if (ssrContext) {
     // SERVER SIDE HANDLING 
-    // staticContext is available only at server
-    // now check if staticContext.data(@type object) contains the data required for Home Component,
-    // if yes, use the data to set the state, else set the 'Home' key in staticContext.data to a promise which resolves in the required data
-    if (staticContext.data && staticContext.data['Home']) {
-      initialData = staticContext.data['Home'];
-    } else if (staticContext.data) {
-      staticContext.data['Home'] = Home.resolveRequiredData();
+    // ssrContext is available only at server
+    // now check if ssrContext.data(@type object) contains the data required for Home Component,
+    // if yes, use the data to set the state, else set the 'Home' key in ssrContext.data to a promise which resolves in the required data
+    if (ssrContext.data && ssrContext.data['Home']) {
+      initialData = ssrContext.data['Home'];
+    } else if (ssrContext.data) {
+      ssrContext.data['Home'] = Home.resolveRequiredData();
     }
-    // else staticContext.data is null : This may be the case when the data required for app couldn't be resolved
+    // else ssrContext.data is null : This may be the case when the data required for app couldn't be resolved
     //  do nothing here, component may render to some static data or null
   } else {
     // CLIENT SIDE HANDLING 
     if (window.__INITIAL_DATA__ && window.__INITIAL_DATA__['Home']) {
       // if  window.__INITIAL_DATA__['Home'] available that means app is being hydrated by React
-      // set the state using the data sent form server
+      // set the state using the data sent from server
       initialData = window.__INITIAL_DATA__['Home'];
-      delete window.__INITIAL_DATA__['Home'];
+      delete window.__INITIAL_DATA__['Home']; // not needed anymore
     } else {
       // here Home is being rendered by client via client side rendering, handle according to ur own logic
     }
@@ -54,8 +57,8 @@ const Home = (props) => {
   }, [])
 
 
-  // console.log('Home props : ', props.staticContext)
-  // const ssrData = props.staticContext ? props.staticContext.homePage : window.__SERVER_DATA__.homePage;
+  // console.log('Home props : ', props.ssrContext)
+  // const ssrData = props.ssrContext ? props.ssrContext.homePage : window.__SERVER_DATA__.homePage;
 
   if (loading) {
     return <h3>Loading ...</h3>;

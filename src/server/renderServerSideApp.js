@@ -10,6 +10,7 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 // import chalk from 'chalk';
 
 import App from '../client/App.jsx';
+import SSRContext from './ssrContext';
 
 const env = getAppEnv();
 const { NODE_ENV } = env.raw;
@@ -52,9 +53,11 @@ const collectRequiredDataPromisesInContext = (context, req) => {
 
   ReactDOMServer.renderToString(
     <ChunkExtractorManager extractor={extractor}>
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
+      <SSRContext.Provider value={context}>
+        <StaticRouter location={req.url} >
+          <App />
+        </StaticRouter>
+      </SSRContext.Provider>
     </ChunkExtractorManager>
   );
 };
@@ -64,7 +67,7 @@ const fetchRequiredData = async (promises) => {
   if (!promises.length) {
     return Promise.reject(null);
   }
-   return await Promise.all(promises);
+  return await Promise.all(promises);
 }
 
 function renderApp(req, res, context) {
@@ -73,26 +76,25 @@ function renderApp(req, res, context) {
 
   const markup = ReactDOMServer.renderToString(
     <ChunkExtractorManager extractor={extractor}>
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
+      <SSRContext.Provider value={context}>
+        <StaticRouter location={req.url} >
+          <App />
+        </StaticRouter>
+      </SSRContext.Provider>
     </ChunkExtractorManager>
   );
 
-  if (context.url) {
-    res.redirect(context.url);
-  } else {
-    // now finally prepare the full HTML page and send it
-    giveFullHtml({
-      helmet: Helmet.renderStatic(),
-      serverData: context.data,
-      markup,
-      extractor
-    }).then((fullMarkup) => {
-      res.status(200).send(fullMarkup);
-    });
 
-  }
+  // now finally prepare the full HTML page and send it
+  giveFullHtml({
+    helmet: Helmet.renderStatic(),
+    serverData: context.data,
+    markup,
+    extractor
+  }).then((fullMarkup) => {
+    res.status(200).send(fullMarkup);
+  });
+
 }
 
 export const giveFullHtml = async ({ helmet, serverData, markup, extractor }) => {
